@@ -51,7 +51,6 @@ var Detail = React.createClass({
                         </div>
                         <s>店面价 399元</s>
                         <p className="note">
-                        <label for="meeting">约会日期：</label><input id="meeting" type="date" value="2014-01-13"/>
                            BlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBla
                         </p>
                     </div>
