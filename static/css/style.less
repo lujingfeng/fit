@@ -1,0 +1,107 @@
+﻿*{
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+}
+
+body{
+  color: #3b3b3b;
+  font-size: 14px;
+  font-family: "Microsoft Yahei", arial, helvetica, sans-serif;
+}
+
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, a, code, em, img, q, small, strong, dd, dl, dt, li, ol, ul, fieldset, form, label, table, tbody, tr, th, td, input {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+html, body{
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.service-list li{
+  height: 80px;
+  overflow: hidden;
+  border-bottom: 1px solid #f1f1f1;
+  padding: 0 20px;
+  list-style: none;
+
+  .name{
+    margin-top: 26px;
+    float: left;
+
+    p{
+      font-size: 18px;
+    }
+  }
+
+  .sec{
+    float: right;
+    margin-top: 26px;
+  }
+}
+
+.detail{
+  .top{
+    box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, .1);
+    .banner img{
+      width: 100%;
+    }
+    .description{
+      padding: 0 6px;
+
+      .note{
+         word-wrap: break-word;
+         margin-top: 6px;
+         padding-bottom: 12px;
+      }
+    }
+    .description .d1{
+      margin: 6px 4px;
+      p{
+        font-size: 16px;
+        float: left;
+        font-weight: bold;
+      }
+      span{
+        float: right;
+      }
+    }
+  }
+
+  .middle{
+    box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, .1);
+    padding: 0 6px;
+    margin-top: 12px;
+    li{
+      line-height: 40px;
+    }
+    .arrow{
+      float: right;
+      color: #7e7e7e;
+    }
+  }
+  .trainer{
+    margin-top: 12px;
+    line-height: 22px;
+    padding: 0 6px;
+  }
+}
+
+.place-order{
+  text-align: center;
+  margin-top: 12px;
+  button{
+    font-size: 18px;
+  }
+}
+
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}

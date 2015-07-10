@@ -1,0 +1,30 @@
+{
+    "res": {
+        "css/style.less": {
+            "uri": "/css/style.css",
+            "type": "css"
+        },
+        "js/app.jsx": {
+            "uri": "/js/app.js",
+            "type": "js",
+            "id": "js/app.jsx"
+        },
+        "js/jquery.js": {
+            "uri": "/js/jquery.js",
+            "type": "js"
+        },
+        "js/mod.js": {
+            "uri": "/js/mod.js",
+            "type": "js"
+        },
+        "js/react.js": {
+            "uri": "/js/react.js",
+            "type": "js"
+        },
+        "js/underscore.js": {
+            "uri": "/js/underscore.js",
+            "type": "js"
+        }
+    },
+    "pkg": {}
+}
