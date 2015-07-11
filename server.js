@@ -116,7 +116,7 @@ connection.connect(function(err){
 
     api.placeOrder({
         openid: "",
-        order_id: ""
+        order_id: Math.random()
     });
     
     api.randomTrainer(function( data ){

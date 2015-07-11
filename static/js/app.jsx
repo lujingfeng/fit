@@ -36,6 +36,25 @@ var ServiceList = React.createClass({
     }
 });
 
+
+var DateSelector = React.createClass({
+    render: function(){
+
+    }
+});
+
+var AdressInput = React.createClass(function(){
+    render: function(){
+
+    }
+});
+
+var ContactInput = React.createClass(function(){
+    render: function(){
+        
+    }
+});
+
 var Detail = React.createClass({
     render: function(){
         return (
