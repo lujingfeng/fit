@@ -36,6 +36,25 @@ define('js/app.jsx', function(require, exports, module){ var ServiceList = React
     }
 });
 
+
+var DateSelector = React.createClass({displayName: "DateSelector",
+    render: function(){
+
+    }
+});
+
+var AdressInput = React.createClass({displayName: "AdressInput",
+    render: function(){
+
+    }
+});
+
+var ContactInput = React.createClass({displayName: "ContactInput",
+    render: function(){
+        
+    }
+});
+
 var Detail = React.createClass({displayName: "Detail",
     render: function(){
         return (
@@ -51,7 +70,6 @@ var Detail = React.createClass({displayName: "Detail",
                         ), 
                         React.createElement("s", null, "店面价 399元"), 
                         React.createElement("p", {className: "note"}, 
-                        React.createElement("label", {for: "meeting"}, "约会日期："), React.createElement("input", {id: "meeting", type: "date", value: "2014-01-13"}), 
                            "BlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBla"
                         )
                     )

@@ -9,9 +9,7 @@ function GetMDay(y, m) {
     if ((y % 40 == 0 && y % 100 != 0) || y % 400 == 0)//判断是否是闰月 
         mday[1] = 29; 
     return mday[m - 1]; 
-} 
-
-  
+}   
 
 // 获取星期数 
 
@@ -27,10 +25,6 @@ function WeekNumber(y, m, d) {
     //0对应星期天，1对应星期一 
     return parseInt(wk); 
 } 
-
-var request = function(){
-    
-};
 
 api.tokenData = null;
 

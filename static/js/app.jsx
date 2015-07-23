@@ -43,13 +43,13 @@ var DateSelector = React.createClass({
     }
 });
 
-var AdressInput = React.createClass(function(){
+var AdressInput = React.createClass({
     render: function(){
 
     }
 });
 
-var ContactInput = React.createClass(function(){
+var ContactInput = React.createClass({
     render: function(){
         
     }
