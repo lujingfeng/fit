@@ -17,7 +17,7 @@ app.use( express.static('static/output') );
 
 var cache = {};
 
-app.engine('vm', function ( filePath, options, callback ) {
+app.engine('html', function ( filePath, options, callback ) {
     if(cache[filePath] && Date.now() - cache[filePath].expires < 1000 * 60 * 5){
         var rendered = _.template(cache[filePath].template, options);
         return callback(null, rendered);
@@ -36,7 +36,7 @@ app.engine('vm', function ( filePath, options, callback ) {
 
 var template = express();
 template.set('views', './static/output/template'); // specify the views directory
-template.set('view engine', 'vm'); // register the template engine
+template.set('view engine', 'html'); // register the template engine
 
 
 template.get("/index", function(req, res){
