@@ -3,6 +3,7 @@ var http = require('http');
 var fs = require('fs');
 var cookieParser = require('cookie-parser');
 
+var request = require("./request.js");
 var _ = require("./static/js/underscore.js");
 var weixinApi = require("./weixinApi.js");
 var mysql = require("mysql");

@@ -1,6 +1,8 @@
 var config = require("./config.js");
 var https = require("https");
-var api = {};
+var request = require("./request.js");
+
+var API = {};
 
 
 // 给定年月获取当月天数   
@@ -26,28 +28,12 @@ function WeekNumber(y, m, d) {
     return parseInt(wk); 
 } 
 
-api.tokenData = null;
+API.tokenData = null;
 
-api.token = function( callback ){
-    https.get(config.TOKEN_URL, function(res) {
-        if(res.statusCode == 200){
-            res.on('data', function( data ) {
-                api.tokenData = JSON.parse(data)
-                callback && callback({
-                    status: 0,
-                    data: api.tokenData
-                });
-            });
-        }else{
-            callback({
-                status: 1
-            });
-        }
-    }).on('error', function(e) {
-        callback({
-            status: 1
-        });
+API.token = function( callback ){
+    request.get(config.TOKEN_URL, function( res ){
+        
     });
 };
 
-module.exports = api;
+module.exports = API;

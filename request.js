@@ -4,38 +4,40 @@ var querystring = require('querystring');
 var URL = require("url");
 
 module.exports = {
-    post: function(url, data, callback){
+    doRequest: function(url, method, data, callback){
         console.log("SEND REQUEST:" + url);
-        console.log( data );
-
-        if( typeof data == "function"){
-            callback = data;
-            data = {};
-        }
 
         var parseUrl = URL.parse(url);
 
         data = querystring.stringify(data);  
 
         var opt = {  
-            method: "POST",  
+            method: method || "GET",  
             host: parseUrl.host,  
             port: parseUrl.port || 80,  
-            path: parseUrl.path,  
-            headers: {  
+            path: parseUrl.path
+        };  
+
+        if( method == "POST" ){
+            opt.headers = {  
                 "Content-Type": 'application/x-www-form-urlencoded',  
                 "Content-Length": data.length  
-            }  
-        };  
+            };
+        }else{
+            opt.path = opt.path + '?' + data;
+        }
+
+        console.log("request optios=", opt, data);
       
-        var req = http.request(opt, function ( serverFeedback ) {  
+        var req = http.request(opt, function ( serverFeedback ) { 
+            serverFeedback.setEncoding('utf8'); 
             if ( serverFeedback.statusCode == 200 ) {  
                 var body = "";  
                 serverFeedback.on('data', function (data) {
                     body += data;
                 }).on('end', function() { 
                     
-                    console.log("****************** req response data ****************");
+                    console.log("****************** response data ****************");
                     console.log(body);
 
                     callback && callback( {
@@ -45,7 +47,7 @@ module.exports = {
                 });  
             }  
             else {  
-                console.log("************ Post Request Error *************", serverFeedback.statusCode);
+                console.log("************  Request Error *************", serverFeedback.statusCode);
 
                 callback && callback({
                     status: serverFeedback.statusCode
@@ -53,7 +55,26 @@ module.exports = {
             }  
         });  
 
-        req.write( data + "\n" );  
+        if( method == "POST" ){
+            req.write( data + "\n" );
+        }
         req.end();
+    },
+
+    post: function(url, data, callback){
+        if( typeof data == "function"){
+            callback = data;
+            data = {};
+        }
+        this.doRequest(url, "POST", data, callback);
+
+    },
+
+    get: function(url, data, callback){
+        if( typeof data == "function"){
+            callback = data;
+            data = {};
+        }
+        this.doRequest(url, "GET", data, callback);
     }
 };
