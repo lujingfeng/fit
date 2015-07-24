@@ -24,7 +24,7 @@ module.exports = {
                 "Content-Length": data.length  
             };
         }else{
-            opt.path = opt.path + '?' + data;
+            //opt.path = opt.path + '&' + data;
         }
 
         console.log("request optios=", opt, data);
@@ -56,6 +56,10 @@ module.exports = {
                 });
             }  
         });  
+
+        req.on('error', function(e) {
+            console.error(e);
+        });
 
         if( method == "POST" ){
             req.write( data + "\n" );
