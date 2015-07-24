@@ -31,7 +31,7 @@ module.exports = {
 
         var requestMod = parseUrl.protocol == "https:" ? https : http;
       
-        var req = requestMod.request(opt, function ( serverFeedback ) { 
+        var req = requestMod.request(opt, function ( serverFeedback ){ 
             serverFeedback.setEncoding('utf8'); 
             if ( serverFeedback.statusCode == 200 ) {  
                 var body = "";  
@@ -55,10 +55,11 @@ module.exports = {
                     status: serverFeedback.statusCode
                 });
             }  
-        });  
-
-        req.on('error', function(e) {
+        }).on( 'error', function(e) {
             console.error(e);
+            callback && callback({
+                status: 500
+            });
         });
 
         if( method == "POST" ){

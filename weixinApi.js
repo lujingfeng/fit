@@ -1,6 +1,6 @@
 var config = require("./config.js");
 var https = require("https");
-var request = require("./request.js");
+var requestify = require('requestify');
 
 var API = {};
 
@@ -31,8 +31,9 @@ function WeekNumber(y, m, d) {
 API.tokenData = null;
 
 API.token = function( callback ){
-    request.get(config.TOKEN_URL, function( res ){
-        
+    requestify.get(config.TOKEN_URL).then(function(response) {
+        // Get the response body 
+        console.log(response.getBody());
     });
 };
 
