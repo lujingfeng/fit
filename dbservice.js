@@ -95,6 +95,24 @@ var api = (function(){
                     });
                 }
             });
+        },
+
+        addUser: function(user, callback){
+            connection.query('INSERT INTO fit.user SET ?', order, function(err, result){
+                console.log(result);
+                if(err){
+                    callback({
+                        status: 1,
+                        message: "error occur"
+                    });
+                }else{
+                    callback({
+                        status: 0,
+                        data: order,
+                        message: "error occur"
+                    });
+                }
+            });
         }
     }
 })();

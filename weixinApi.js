@@ -68,10 +68,6 @@ API.__profileByOpenId = function( openid, callback ){
         requestify.get( USER_INFO_URL ).then( function( response ) {
             if( response.getCode() == 200 ){
                 var content = response.getBody();
-
-                console.log("-------content----");
-                console.log(content);
-
                 callback && callback( content );
             }else{
                 callback && callback( '' );
