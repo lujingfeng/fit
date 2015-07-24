@@ -1,5 +1,4 @@
 var config = require("./config.js");
-var https = require("https");
 var requestify = require('requestify');
 
 var API = {};
@@ -28,12 +27,56 @@ function WeekNumber(y, m, d) {
     return parseInt(wk); 
 } 
 
-API.tokenData = null;
+API.access_token = null;
+API.access_token_expires = 0;
 
 API.token = function( callback ){
-    requestify.get(config.TOKEN_URL).then(function(response) {
-        // Get the response body 
-        console.log(response.getBody());
+    if(API.access_token && API.access_token_expires - Date.now() > 0){
+        return callback( API.access_token );
+    }
+
+    requestify.get( config.TOKEN_URL ).then( function( response ) {
+        if( response.getCode() == 200 ){
+            var content = response.getBody();
+            API.access_token = content.access_token;
+            API.access_token_expires = Date.now() + 1000 * 60 * 60 * 1.5;
+
+            callback && callback( content.access_token );
+        }else{
+            callback && callback( '' );
+        }
+    });
+};
+
+API.getProfile = function( code ){
+    var ACCESS_TOKEN_URL = config.ACCESS_TOKEN_URL.replace("{code}", code);
+    requestify.get( ACCESS_TOKEN_URL ).then( function( response ) {
+        if( response.getCode() == 200 ){
+            var content = response.getBody();
+            console.log(content);
+
+            callback && callback(  );
+        }else{
+            callback && callback( '' );
+        }
+    });
+};
+
+API.__profileByOpenId = function( openid ){
+    API.token(function( token ){
+        var USER_INFO_URL = config.USER_INFO_URL.replace("{accesstoken}", token).replace("{openid}", openid);
+        requestify.get( USER_INFO_URL ).then( function( response ) {
+            if( response.getCode() == 200 ){
+                var content = response.getBody();
+
+                console.log("-------content----");
+                console.log(content);
+
+                callback && callback(  );
+            }else{
+                callback && callback( '' );
+            }
+        });
     });
 };
 

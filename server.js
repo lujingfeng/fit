@@ -3,7 +3,6 @@ var http = require('http');
 var fs = require('fs');
 var cookieParser = require('cookie-parser');
 
-var request = require("./request.js");
 var _ = require("./static/js/underscore.js");
 var weixinApi = require("./weixinApi.js");
 var mysql = require("mysql");
@@ -42,16 +41,9 @@ template.set('view engine', 'html'); // register the template engine
 
 template.get("/index", function(req, res){
     res.render('index', { name: 'Hey'});
-
-    weixinApi.token(function( data ){
-
-    });
 });
 
 app.all('/mobile/*', function( req, res, next ){
-    weixinApi.token(function( data ){
-
-    });
     try{
         var query = req.query;
         var paras;
@@ -59,6 +51,7 @@ app.all('/mobile/*', function( req, res, next ){
         if( req.cookies.sessionid ){
             next();
         }else if( query && query.code ){
+            API.getProfile( query.code );
             next();
         }else if( !req.cookies.sessionid ){
             var redirect_uri = encodeURIComponent("http://" + req.hostname + req.originalUrl);
@@ -71,6 +64,6 @@ app.all('/mobile/*', function( req, res, next ){
 }); 
 
 app.use('/mobile', template); 
-app.listen(80, function () {
+app.listen(3000, function () {
     console.log('Fit App Ready');
 })
