@@ -53,17 +53,16 @@ API.getProfile = function( code ){
     requestify.get( ACCESS_TOKEN_URL ).then( function( response ) {
         if( response.getCode() == 200 ){
             var content = response.getBody();
-            console.log(content);
-
-            callback && callback(  );
+            
+            this.__profileByOpenId( content.openid, callback);
         }else{
             callback && callback( '' );
         }
-    });
+    }.bind(this));
 };
 
-API.__profileByOpenId = function( openid ){
-    API.token(function( token ){
+API.__profileByOpenId = function( openid, callback ){
+    this.token(function( token ){
         var USER_INFO_URL = config.USER_INFO_URL.replace("{accesstoken}", token).replace("{openid}", openid);
         requestify.get( USER_INFO_URL ).then( function( response ) {
             if( response.getCode() == 200 ){
@@ -72,7 +71,7 @@ API.__profileByOpenId = function( openid ){
                 console.log("-------content----");
                 console.log(content);
 
-                callback && callback(  );
+                callback && callback( content );
             }else{
                 callback && callback( '' );
             }

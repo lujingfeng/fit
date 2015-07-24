@@ -51,7 +51,7 @@ app.all('/mobile/*', function( req, res, next ){
         if( req.cookies.sessionid ){
             next();
         }else if( query && query.code ){
-            API.getProfile( query.code );
+            weixinApi.getProfile( query.code );
             next();
         }else if( !req.cookies.sessionid ){
             var redirect_uri = encodeURIComponent("http://" + req.hostname + req.originalUrl);
