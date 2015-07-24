@@ -48,11 +48,12 @@ API.token = function( callback ){
     });
 };
 
-API.getProfile = function( code ){
+API.getProfile = function( code , callback){
     var ACCESS_TOKEN_URL = config.ACCESS_TOKEN_URL.replace("{code}", code);
     requestify.get( ACCESS_TOKEN_URL ).then( function( response ) {
         if( response.getCode() == 200 ){
             var content = response.getBody();
+            content = JSON.parse(content);
             
             this.__profileByOpenId( content.openid, callback);
         }else{
