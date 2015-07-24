@@ -49,6 +49,9 @@ template.get("/index", function(req, res){
 });
 
 app.all('/mobile/*', function( req, res, next ){
+    weixinApi.token(function( data ){
+
+    });
     try{
         var query = req.query;
         var paras;

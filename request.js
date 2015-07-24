@@ -28,8 +28,10 @@ module.exports = {
         }
 
         console.log("request optios=", opt, data);
+
+        var requestMod = parseUrl.protocol == "https:" ? https : http;
       
-        var req = http.request(opt, function ( serverFeedback ) { 
+        var req = requestMod.request(opt, function ( serverFeedback ) { 
             serverFeedback.setEncoding('utf8'); 
             if ( serverFeedback.statusCode == 200 ) {  
                 var body = "";  
