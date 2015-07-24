@@ -1,3 +1,7 @@
+var mysql = require("mysql");
+var config = require("./config.js");
+var _ = require("./static/js/underscore.js");
+
 var connection = mysql.createConnection({
     host     : config.MYSQL_HOST,
     user     : config.MYSQL_USER,
@@ -80,6 +84,7 @@ var api = (function(){
                 }
             });
         },
+
         placeOrder: function(order, callback){
             connection.query('INSERT INTO fit.order SET ?', order, function(err, result){
                 if(err){
@@ -98,7 +103,7 @@ var api = (function(){
         },
 
         addUser: function(user, callback){
-            connection.query('INSERT INTO fit.user SET ?', order, function(err, result){
+            connection.query('INSERT INTO fit.user SET ?', user, function(err, result){
                 console.log(result);
                 if(err){
                     callback({
@@ -128,7 +133,7 @@ connection.connect(function(err){
     api.placeOrder({
         openid: "",
         order_id: Math.random()
-    });
+    }, function(){});
     
     api.randomTrainer(function( data ){
         
@@ -140,4 +145,4 @@ connection.connect(function(err){
 });
 
 
-module.exports = 
+module.exports = api;

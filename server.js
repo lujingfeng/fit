@@ -6,8 +6,6 @@ var cookieParser = require('cookie-parser');
 var _ = require("./static/js/underscore.js");
 var weixinApi = require("./weixinApi.js");
 var dbservice = require("./dbservice.js");
-
-var mysql = require("mysql");
 var config = require("./config.js");
 
 
@@ -54,7 +52,9 @@ app.all('/mobile/*', function( req, res, next ){
             next();
         }else if( query && query.code ){
             weixinApi.getProfile( query.code, function( profile ){
-                dbservice.addUser(profile, function(){
+                var str = JSON.stringify(profile);
+
+                dbservice.addUser({user_json: str}, function(){
                     next();
                 });
             });
