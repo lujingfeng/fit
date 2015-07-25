@@ -15,7 +15,6 @@ var timeline = [ 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
                 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
 
 var api = (function(){
-    
     return {
         fetchTrainer: function(callback){
             connection.query('SELECT * FROM fit.trainer', function(err, rows){
@@ -54,13 +53,13 @@ var api = (function(){
             this.fetchTrainer(function(res){
                 if(res.status === 0){
                     var trainerList = res.data ||[];
-                    var avlist =  trainerList.reduce(function(pre, next){
+                    var avlist =  trainerList.length>0?trainerList.reduce(function(pre, next){
                         var rtn = _.isArray(pre) ? pre : [];
                         if(api.checkTrainerAvailable(next)){
                             rtn.push(next);
                         }
                         return rtn;
-                    }) || [];
+                    }) : [];
 
                     var len = avlist.length;
 
@@ -104,16 +103,46 @@ var api = (function(){
 
         addUser: function(user, callback){
             connection.query('INSERT INTO fit.user SET ?', user, function(err, result){
-                console.log(result);
+                console.log("fit.user", result, err);
                 if(err){
                     callback({
                         status: 1,
                         message: "error occur"
                     });
                 }else{
+                    user.id = result.insertId;
                     callback({
                         status: 0,
-                        data: order,
+                        data: user,
+                        message: "error occur"
+                    });
+                }
+            });
+        },
+
+        createSessionForUser: function( userinfo , callback){
+            if(typeof userinfo == "undefined"){
+                return;
+            }
+            var sessionid = Date.now();
+            var paras = {
+                sessionid: sessionid,
+                createtime: Date.now(),
+                userid: userinfo.id,
+                openid: userinfo.openid
+            };
+            connection.query('INSERT INTO fit.session SET ?', paras , function(err, result){
+                console.log('fit.session', result, err);
+                if(err){
+                    callback({
+                        status: 1,
+                        message: "error occur"
+                    });
+                }else{
+                    paras.id = result.insertId;
+                    callback({
+                        status: 0,
+                        data: paras,
                         message: "error occur"
                     });
                 }

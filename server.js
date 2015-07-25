@@ -38,7 +38,6 @@ var template = express();
 template.set('views', './static/output/template'); // specify the views directory
 template.set('view engine', 'html'); // register the template engine
 
-
 template.get("/index", function(req, res){
     res.render('index', { name: 'Hey'});
 });
@@ -48,14 +47,37 @@ app.all('/mobile/*', function( req, res, next ){
         var query = req.query;
         var paras;
 
-        if( req.cookies.sessionid ){
+        console.log(query, req.cookies);
+
+        if( true ){
             next();
         }else if( query && query.code ){
             weixinApi.getProfile( query.code, function( profile ){
-                var str = JSON.stringify(profile);
+                var openid = profile.openid;
+                var str = JSON.stringify( profile );
 
-                dbservice.addUser({user_json: str}, function(){
-                    next();
+                dbservice.addUser({
+                    user_json: str,
+                    openid: openid,
+                    createtime: Date.now()
+                }, function(result){
+                    if(result.status === 0){
+                        dbservice.createSessionForUser(result.data, function( s_result ){
+                            if(s_result.status === 0){
+                                var sessionid = s_result.sessionid;
+                                res.cookie(
+                                    'sessionid', sessionid, {  
+                                        domain: req.hostname,
+                                        secure: false, 
+                                        httpOnly: true,
+                                        expires: new Date(Date.now() + 1000*60*60*24*365)
+                                    });
+                                next();
+                            }else{
+
+                            }
+                        });
+                    }
                 });
             });
         }else if( !req.cookies.sessionid ){
